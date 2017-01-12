@@ -1,0 +1,48 @@
+{
+  "projectId": "5834589c88695d217c1eed1a",
+  "annotated_files": [
+    {
+      "meta": {
+        "fileId": "5849dd9cf18e9004a0f7349d",
+        "timeStamp": "2016-12-08 23:24:28.748",
+        "projectId": "5834589c88695d217c1eed1a",
+        "name": "C:\\Users\\Gopala\\Documents\\GitHub\\cc-annotator\\SampleFolder\\Folder_3\\Test2\\SGH0.MCR",
+        "lang": "MCR",
+        "hash": "4de85c6b6cab6080f8e11c03f3a1df133555b2cbb3eb8352d8456048191de5d4"
+      },
+      "annotations": [
+        {
+          "begin": "656",
+          "end": "664",
+          "name": "Hardcoded system name detected",
+          "token": "CU250S_2",
+          "rows": [
+            18,
+            26
+          ]
+        },
+        {
+          "begin": "838",
+          "end": "846",
+          "name": "Hardcoded system name detected",
+          "token": "CU250S_2",
+          "rows": [
+            18,
+            26
+          ]
+        },
+        {
+          "begin": "1179",
+          "end": "1187",
+          "name": "Hardcoded wait function detected",
+          "token": "wait(10)",
+          "rows": [
+            42
+          ]
+        }
+      ]
+    }
+  ],
+  "skipped_files": [],
+  "last_update": "2016-12-08 22:38:32.517"
+}

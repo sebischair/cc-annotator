@@ -1,0 +1,34 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Annotate Code",
+        "command": "annotator:annotate_code"
+      },
+      {
+        "label": "Annotate Comments",
+        "command": "annotator:annotate_comment"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "annotator",
+          "submenu": [
+            {
+              "label": "Annotate Code",
+              "command": "annotator:annotate_code"
+            },
+            {
+              "label": "Annotate Comments",
+              "command": "annotator:annotate_comment"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
