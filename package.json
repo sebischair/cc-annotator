@@ -1,5 +1,5 @@
 {
-  "name": "annotator",
+  "name": "cc-annotator",
   "main": "./lib/annotator",
   "version": "0.0.0",
   "description": "Allows annotation your code.",
