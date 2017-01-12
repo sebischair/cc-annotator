@@ -2,7 +2,7 @@
   "name": "annotator",
   "main": "./lib/annotator",
   "version": "0.0.0",
-  "description": "A short description of your package",
+  "description": "Allows annotation your code.",
   "keywords": [],
   "activationCommands": [
     {
@@ -12,7 +12,7 @@
       "atom-workspace": "annotator:annotate_code"
     }
   ],
-  "repository": "https://github.com/atom/annotator",
+  "repository": "https://github.com/sebischair/cc-annotator",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
