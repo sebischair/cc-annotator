@@ -6,8 +6,8 @@
         "command": "annotator:annotate_code"
       },
       {
-        "label": "Annotate Comments",
-        "command": "annotator:annotate_comment"
+        "label": "Submit New Annotation",
+        "command": "annotator:submit_annotation"
       }
     ]
   },
@@ -16,15 +16,15 @@
       "label": "Packages",
       "submenu": [
         {
-          "label": "annotator",
+          "label": "Annotator",
           "submenu": [
             {
               "label": "Annotate Code",
               "command": "annotator:annotate_code"
             },
             {
-              "label": "Annotate Comments",
-              "command": "annotator:annotate_comment"
+              "label": "Submit New Annotation",
+              "command": "annotator:submit_annotation"
             }
           ]
         }
