@@ -1,12 +1,15 @@
 {
   "name": "cc-annotator",
   "main": "./lib/annotator",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Allows annotation your code.",
   "keywords": [],
   "activationCommands": [
     {
       "atom-workspace": "annotator:annotate_comment"
+    },
+    {
+      "atom-workspace": "annotator:annotate_code"
     },
     {
       "atom-workspace": "annotator:annotate_code"

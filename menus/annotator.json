@@ -1,13 +1,22 @@
 {
   "context-menu": {
     "atom-text-editor": [
-      {
-        "label": "Annotate Code",
-        "command": "annotator:annotate_code"
-      },
-      {
-        "label": "Submit New Annotation",
-        "command": "annotator:submit_annotation"
+        {
+            "label": "Annotator",
+            "submenu": [
+              {
+                "label": "Annotate Code",
+                "command": "annotator:annotate_code"
+              },
+              {
+                "label": "Submit New Annotation",
+                "command": "annotator:submit_annotation"
+              },
+              {
+                "label": "Update Reqular Expressions",
+                "command": "annotator:update_patterns"
+              }
+            ]
       }
     ]
   },
@@ -25,6 +34,10 @@
             {
               "label": "Submit New Annotation",
               "command": "annotator:submit_annotation"
+            },
+            {
+              "label": "Update Reqular Expressions",
+              "command": "annotator:update_patterns"
             }
           ]
         }
