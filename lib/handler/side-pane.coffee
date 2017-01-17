@@ -10,7 +10,7 @@ class PaneView extends HTMLElement
     @closeIcon.classList.add('close-btn', 'icon', 'icon-remove-close')
     @closeIcon.addEventListener 'click', @destroy
     @closeElem.appendChild(@closeIcon)
-    #@appendChild(@closeElem)
+    @appendChild(@closeElem)
 
 
     @nameElem = document.createElement('div')
