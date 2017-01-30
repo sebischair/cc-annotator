@@ -1,0 +1,64 @@
+{
+  "projectId": "5834589c88695d217c1eed1a",
+  "annotated_files": [
+    {
+      "meta": {
+        "fileId": "588efbb3c2f0d0117802fe9d",
+        "timeStamp": "2017-01-30 09:39:16.546",
+        "projectId": "5834589c88695d217c1eed1a",
+        "name": "annotator.js",
+        "lang": "js",
+        "hash": "7b6699769cff581a072e27eaf006bb1f0249c248986fc8dc44fa1f2cc211b80d"
+      },
+      "annotations": [
+        {
+          "begin": "491",
+          "end": "499",
+          "name": "Patterns",
+          "conceptType": "expertise",
+          "similarityScore": "100.0",
+          "token": "patterns",
+          "rows": [
+            11,
+            44,
+            45,
+            46,
+            66,
+            66,
+            342,
+            344,
+            345
+          ]
+        },
+        {
+          "begin": "718",
+          "end": "725",
+          "name": "Default",
+          "conceptType": "expertise",
+          "similarityScore": "100.0",
+          "token": "default",
+          "rows": [
+            19
+          ]
+        },
+        {
+          "begin": "2708",
+          "end": "2712",
+          "name": "Data",
+          "conceptType": "expertise",
+          "similarityScore": "100.0",
+          "token": "data",
+          "rows": [
+            91,
+            150,
+            175,
+            192,
+            200
+          ]
+        }
+      ]
+    }
+  ],
+  "skipped_files": [],
+  "last_update": "2017-01-30 09:39:16.546"
+}
