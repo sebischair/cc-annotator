@@ -57,6 +57,74 @@
           ]
         }
       ]
+    },
+    {
+      "meta": {
+        "fileId": "588f9bbec2f0d0117802fea2",
+        "timeStamp": "2017-01-30 21:02:06.887",
+        "projectId": "583464c9f18e901138ba5663",
+        "name": "cc-annotator-my-dev",
+        "lang": "cc-annotator-my-dev",
+        "hash": "e2b481ad72f1ff85f3418547bcf09b3c6f49d9daa243ec39a2d316cc0ec1b65b"
+      },
+      "annotations": [
+        {
+          "begin": "542",
+          "end": "550",
+          "name": "Patterns",
+          "conceptType": "expertise",
+          "similarityScore": "100.0",
+          "token": "patterns",
+          "rows": [
+            12,
+            46,
+            47,
+            48,
+            68,
+            68,
+            349,
+            351,
+            352
+          ]
+        },
+        {
+          "begin": "769",
+          "end": "776",
+          "name": "Default",
+          "conceptType": "expertise",
+          "similarityScore": "100.0",
+          "token": "default",
+          "rows": [
+            20
+          ]
+        },
+        {
+          "begin": "2783",
+          "end": "2787",
+          "name": "Data",
+          "conceptType": "expertise",
+          "similarityScore": "100.0",
+          "token": "data",
+          "rows": [
+            93,
+            151,
+            182,
+            199,
+            207
+          ]
+        },
+        {
+          "begin": "11123",
+          "end": "11127",
+          "name": "Test",
+          "conceptType": "expertise",
+          "similarityScore": "100.0",
+          "token": "Test",
+          "rows": [
+            350
+          ]
+        }
+      ]
     }
   ],
   "skipped_files": [],
