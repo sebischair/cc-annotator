@@ -1,71 +1,14 @@
 {
-  "projectId": "5834589c88695d217c1eed1a",
+  "projectId": "5890eac6c2f0d0117802feb0",
   "annotated_files": [
     {
       "meta": {
-        "fileId": "588efbb3c2f0d0117802fe9d",
-        "timeStamp": "2017-01-30 09:39:16.546",
-        "projectId": "5834589c88695d217c1eed1a",
-        "name": "annotator.js",
-        "lang": "js",
-        "hash": "7b6699769cff581a072e27eaf006bb1f0249c248986fc8dc44fa1f2cc211b80d"
-      },
-      "annotations": [
-        {
-          "begin": "491",
-          "end": "499",
-          "name": "Patterns",
-          "conceptType": "expertise",
-          "similarityScore": "100.0",
-          "token": "patterns",
-          "rows": [
-            11,
-            44,
-            45,
-            46,
-            66,
-            66,
-            342,
-            344,
-            345
-          ]
-        },
-        {
-          "begin": "718",
-          "end": "725",
-          "name": "Default",
-          "conceptType": "expertise",
-          "similarityScore": "100.0",
-          "token": "default",
-          "rows": [
-            19
-          ]
-        },
-        {
-          "begin": "2708",
-          "end": "2712",
-          "name": "Data",
-          "conceptType": "expertise",
-          "similarityScore": "100.0",
-          "token": "data",
-          "rows": [
-            91,
-            150,
-            175,
-            192,
-            200
-          ]
-        }
-      ]
-    },
-    {
-      "meta": {
-        "fileId": "588f9bbec2f0d0117802fea2",
-        "timeStamp": "2017-01-30 21:02:06.887",
-        "projectId": "583464c9f18e901138ba5663",
+        "fileId": "5891096ec2f0d0117802fed9",
+        "timeStamp": "2017-01-31 23:02:23.663",
+        "projectId": "5890e9dbc2f0d0117802feae",
         "name": "cc-annotator-my-dev",
         "lang": "cc-annotator-my-dev",
-        "hash": "e2b481ad72f1ff85f3418547bcf09b3c6f49d9daa243ec39a2d316cc0ec1b65b"
+        "hash": "cd177897c59dc4274987be3b438620095afb2363e7f26d2d79513643ac39b5d3"
       },
       "annotations": [
         {
@@ -77,56 +20,56 @@
           "token": "patterns",
           "rows": [
             12,
-            46,
-            47,
             48,
-            68,
-            68,
-            349,
-            351,
-            352
+            49,
+            50,
+            76,
+            76,
+            435,
+            437,
+            438
           ]
         },
         {
-          "begin": "769",
-          "end": "776",
+          "begin": "839",
+          "end": "846",
           "name": "Default",
           "conceptType": "expertise",
           "similarityScore": "100.0",
           "token": "default",
           "rows": [
-            20
+            21
           ]
         },
         {
-          "begin": "2783",
-          "end": "2787",
+          "begin": "3072",
+          "end": "3076",
           "name": "Data",
           "conceptType": "expertise",
           "similarityScore": "100.0",
           "token": "data",
           "rows": [
-            93,
-            151,
-            182,
-            199,
-            207
+            101,
+            159,
+            191,
+            208,
+            221
           ]
         },
         {
-          "begin": "11123",
-          "end": "11127",
+          "begin": "13547",
+          "end": "13551",
           "name": "Test",
           "conceptType": "expertise",
           "similarityScore": "100.0",
           "token": "Test",
           "rows": [
-            350
+            436
           ]
         }
       ]
     }
   ],
   "skipped_files": [],
-  "last_update": "2017-01-30 09:39:16.546"
+  "last_update": "2017-01-31 20:55:28.597"
 }
