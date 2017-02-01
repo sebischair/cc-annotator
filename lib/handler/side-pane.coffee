@@ -1,21 +1,23 @@
 {CompositeDisposable} = require 'event-kit'
 
+side_pane = {}
+
 module.exports =
 class PaneView extends HTMLElement
   initialize: (@name, @line, @file, @vote, @line_content, @description, @current_row) ->
-
+    side_pane = this
     @closeElem = document.createElement('div')
     @closeElem.classList.add('close-container')
     @closeIcon = document.createElement('span')
     @closeIcon.classList.add('close-btn', 'icon', 'icon-remove-close')
-    @closeIcon.addEventListener 'click', @destroy
+    @closeIcon.addEventListener 'click', side_pane.destroy
     @closeElem.appendChild(@closeIcon)
-    @appendChild(@closeElem)
+    side_pane.appendChild(@closeElem)
 
 
     @nameElem = document.createElement('div')
     @nameElem.classList.add('smell-name', 'icon')
-    @appendChild(@nameElem)
+    side_pane.appendChild(@nameElem)
 
     @nameElem.textContent = @name
     @nameElem.title = @name
@@ -32,7 +34,7 @@ class PaneView extends HTMLElement
     @tokenSpan = document.createElement('span')
     @tokenSpan.classList.add('smell-detail-text', 'line')
     @tokenBox.appendChild(@tokenSpan)
-    @appendChild(@tokenBox)
+    side_pane.appendChild(@tokenBox)
 
     @tokenSpan.textContent = @line_content
 
@@ -48,7 +50,7 @@ class PaneView extends HTMLElement
     @nameline = document.createElement('span')
     @nameline.classList.add('smell-detail-text', 'line')
     @nameBox.appendChild(@nameline)
-    @appendChild(@nameBox)
+    side_pane.appendChild(@nameBox)
 
     @nameline.textContent = (" "+(item + 1) for item in @line )
     @nameline.title = @line
@@ -65,7 +67,7 @@ class PaneView extends HTMLElement
     @descrTitle = document.createElement('div')
     @descrTitle.classList.add('smell-detail-text', 'line')
     @descrBox.appendChild(@descrTitle)
-    @appendChild(@descrBox)
+    side_pane.appendChild(@descrBox)
 
     @descrTitle.textContent = @description
 
@@ -81,7 +83,7 @@ class PaneView extends HTMLElement
     @votesTitle = document.createElement('span')
     @votesTitle.classList.add('smell-detail-text', 'line')
     @votesBox.appendChild(@votesTitle)
-    @appendChild(@votesBox)
+    side_pane.appendChild(@votesBox)
 
     @votesTitle.textContent = @vote
 
@@ -111,7 +113,7 @@ class PaneView extends HTMLElement
 
     #@upVoteButton.textContent = "Down"
 
-    @appendChild(@buttonsBox)
+    side_pane.appendChild(@buttonsBox)
 
 
   setName: (name) ->
@@ -161,14 +163,17 @@ class PaneView extends HTMLElement
     @destroy()
 
   destroy: ->
-    @remove()
-    @removeChild(@nameElem)
-    @removeChild(@nameBox)
-    @removeChild(@tokenBox)
-    @removeChild(@descrBox)
-    @removeChild(@buttonsBox)
-    @removeChild(@votesBox)
-    #@removeChild(@closeElem)
-    @panel.destroy()
+    try
+      side_pane.remove()
+      side_pane.removeChild(@nameElem)
+      side_pane.removeChild(@nameBox)
+      side_pane.removeChild(@tokenBox)
+      side_pane.removeChild(@descrBox)
+      side_pane.removeChild(@buttonsBox)
+      side_pane.removeChild(@votesBox)
+      side_pane.removeChild(@closeElem)
+      side_pane.panel.destroy()
+
+    catch
 
 module.exports = document.registerElement('side-pane', prototype: PaneView.prototype, extends: 'div')
