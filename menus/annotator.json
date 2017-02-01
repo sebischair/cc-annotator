@@ -15,6 +15,10 @@
               {
                 "label": "Update Reqular Expressions",
                 "command": "annotator:update_patterns"
+              },
+              {
+                "label": "Remove Annoations from Text Editor",
+                "command": "annotator:remove_annotations"
               }
             ]
       }
