@@ -15,6 +15,10 @@
               {
                 "label": "Update Reqular Expressions",
                 "command": "annotator:update_patterns"
+              },
+              {
+                "label": "Open Dashboard",
+                "command": "annotator:open_dashboard"
               }
             ]
       }
