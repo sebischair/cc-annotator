@@ -5,6 +5,7 @@
 Highcharts = require('highcharts')
 fs = require('fs')
 path = require('path')
+moment = require('moment')
 
 module.exports =
 class Dashboard extends ScrollView
@@ -21,6 +22,9 @@ class Dashboard extends ScrollView
      for somefile in files_
        console.log(somefile)
      @getAnnotationCounts(files_ , state.path)
+     @getUserContributions(state.path)
+     @getTagDistributions(state.path)
+     @getAnnotationsCountbyTime(state.path)
      @addGraph()
 
   addGraph: ->
@@ -37,11 +41,11 @@ class Dashboard extends ScrollView
       series: [
         {
           name: 'User Generated Annotation'
-          data: @set2
+          data: @set3
         }
         {
           name: 'Machine Generated Annotation'
-          data: @set3
+          data: @set2
         }
       ])
 
@@ -61,26 +65,7 @@ class Dashboard extends ScrollView
       series: [ {
         name: 'Annotations created'
         colorByPoint: true
-        data: [
-          {
-            name: 'Max'
-            y: 56
-          }
-          {
-            name: 'Krishna'
-            y: 40
-            sliced: true
-            selected: true
-          }
-          {
-            name: 'Klym'
-            y: 17
-          }
-          {
-            name: 'Manoj'
-            y: 24
-          }
-        ]
+        data: @set4
       } ])
 
     newSpan2 = document.createElement('div')
@@ -99,34 +84,7 @@ class Dashboard extends ScrollView
       series: [ {
         name: 'Annotations tagged'
         colorByPoint: true
-        data: [
-          {
-            name: 'Cyclomatic complexity'
-            y: 21
-          }
-          {
-            name: 'Downcasting'
-            y: 34
-          }
-          {
-            name: 'Long method:'
-            y: 11
-          }
-          {
-            name: 'Feature envy'
-            y: 24
-          }
-          {
-            name: 'Inappropriate intimacy'
-            y: 45
-            sliced: true
-            selected: true
-          }
-          {
-            name: 'Orphan variable'
-            y: 11
-          }
-        ]
+        data: @set5
       } ])
 
     newDiv2 = document.createElement('div')
@@ -201,15 +159,120 @@ class Dashboard extends ScrollView
       annotatedFiles = data.annotated_files
       for annot in annotatedFiles
         macgenAnnots[annot.meta.name] = annot.annotations.length
+        customAnnots[annot.meta.name] = annot.custom_annotations.length
       for file in files
         @set1.push(file)
         if(typeof macgenAnnots[file] == 'undefined')
           @set2.push(0)
         else
           @set2.push(macgenAnnots[file] )
+        if(typeof customAnnots[file] == 'undefined')
+          @set3.push(0)
+        else
+          @set3.push(customAnnots[file] )
       for elem in @set1
         console.log('Element: ' + elem)
       for elem in @set2
-        console.log('Value: ' + elem)
+        console.log('Annot Value: ' + elem)
+      for elem in @set3
+        console.log('Custo Value: ' + elem)
     catch error
       console.log('Error: ' + error)
+
+  getUserContributions: (dir) ->
+    list1 = []
+    userCntMap = {}
+    @set4 = []
+    fileName = path.join(dir, '.annotator')
+    try
+      json = fs.readFileSync(fileName)
+      data = JSON.parse(json)
+      annotatedFiles = data.annotated_files
+      for annot in annotatedFiles
+        for cust in annot.custom_annotations
+          if(list1.indexOf(cust.user.name) == -1)
+            list1.push(cust.user.name)
+          if(typeof userCntMap[cust.user.name] == 'undefined')
+            userCntMap[cust.user.name] = 1
+          else
+            console.log('In else...')
+            userCntMap[cust.user.name] += 1
+      for usr in list1
+        @set4.push({
+            name: usr
+            y: userCntMap[usr]
+          })
+      console.log("Formated List --->")
+      console.log(@set4)
+    catch error
+      console.log('Error: ' + error)
+
+  getTagDistributions: (dir) ->
+    list1 = []
+    userCntMap = {}
+    @set5 = []
+    fileName = path.join(dir, '.annotator')
+    try
+      json = fs.readFileSync(fileName)
+      data = JSON.parse(json)
+      annotatedFiles = data.annotated_files
+      for annot in annotatedFiles
+        for cust in annot.custom_annotations
+          for tag in cust.tags
+            if(list1.indexOf(tag) == -1)
+              list1.push(tag)
+            if(typeof userCntMap[tag] == 'undefined')
+              userCntMap[tag] = 1
+            else
+              console.log('In else...')
+              userCntMap[tag] += 1
+      for tag in list1
+        @set5.push({
+            name: tag
+            y: userCntMap[tag]
+          })
+      console.log("Formated List --->")
+      console.log(@set5)
+    catch error
+      console.log('Error: ' + error)
+
+
+  getAnnotationsCountbyTime: (dir) ->
+    customAnnots = {}
+    macgenAnnots = {}
+    @set6 = []
+    @set7 = []
+    @set8 = []
+    @set6.push(moment().subtract(28, 'days'))
+    @set6.push(moment().subtract(21, 'days'))
+    @set6.push(moment().subtract(14, 'days'))
+    @set6.push(moment().subtract(7 , 'days'))
+    @set6.push(moment())
+    fileName = path.join(dir, '.annotator')
+    try
+      json = fs.readFileSync(fileName)
+      data = JSON.parse(json)
+      annotatedFiles = data.annotated_files
+      for annot in annotatedFiles
+        for cust in annot.custom_annotations
+          createdDate = @parseDate(cust.createdAt)
+          console.log("Created Date " + createdDate)
+          for timing in @set6
+            if(timing.isAfter(createdDate))
+              if(typeof customAnnots[timing] == 'undefined')
+                customAnnots[timing] = 1
+              else
+                customAnnots[timing] += 1
+            else
+                customAnnots[timing] = 0  
+      for timing in @set6
+        @set7.push(customAnnots[timing])
+      console.log(@set6)
+      console.log(@set7)
+    catch error
+      console.log('Error: ' + error)
+  parseDate: (ufDate) ->
+    date = ufDate.substring(8,10)
+    month = ufDate.substring(4,7)
+    year = ufDate.substring(ufDate.length - 4,ufDate.length)
+    return moment(month + ' ' + date + ', ' + year).format('ll')
