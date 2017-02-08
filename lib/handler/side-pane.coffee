@@ -4,7 +4,7 @@ side_pane = {}
 
 module.exports =
 class PaneView extends HTMLElement
-  initialize: (@name, @line, @file, @vote, @line_content, @description, @current_row) ->
+  initialize: (@name, @line, @file, @vote, @line_content, @description, @current_row, @type) ->
     side_pane = this
     @closeElem = document.createElement('div')
     @closeElem.classList.add('close-container')
@@ -42,18 +42,32 @@ class PaneView extends HTMLElement
     @nameBox = document.createElement('div')
     @nameBox.classList.add('smell-detail-box')
 
-    @nameTitle = document.createElement('span')
-    @nameTitle.classList.add('smell-detail-info', 'line')
-    @nameTitle.textContent = "Lines:"
-    @nameBox.appendChild(@nameTitle)
+    if(@type.startsWith("Machine"))
+      @nameTitle = document.createElement('span')
+      @nameTitle.classList.add('smell-detail-info', 'line')
+      @nameTitle.textContent = "Lines:"
+      @nameBox.appendChild(@nameTitle)
 
-    @nameline = document.createElement('span')
-    @nameline.classList.add('smell-detail-text', 'line')
-    @nameBox.appendChild(@nameline)
-    side_pane.appendChild(@nameBox)
+      @nameline = document.createElement('span')
+      @nameline.classList.add('smell-detail-text', 'line')
+      @nameBox.appendChild(@nameline)
+      side_pane.appendChild(@nameBox)
 
-    @nameline.textContent = (" "+(item + 1) for item in @line )
-    @nameline.title = @line
+      @nameline.textContent = (" "+(item + 1) for item in @line )
+      @nameline.title = @line
+    else
+      @nameTitle = document.createElement('span')
+      @nameTitle.classList.add('smell-detail-info', 'line')
+      @nameTitle.textContent = "Line:"
+      @nameBox.appendChild(@nameTitle)
+
+      @nameline = document.createElement('span')
+      @nameline.classList.add('smell-detail-text', 'line')
+      @nameBox.appendChild(@nameline)
+      side_pane.appendChild(@nameBox)
+
+      @nameline.textContent = @line.start.row
+      @nameline.title = @line
 
     # Description
     @descrBox = document.createElement('div')
