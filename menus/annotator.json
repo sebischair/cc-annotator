@@ -19,6 +19,10 @@
               {
                 "label": "Open Dashboard",
                 "command": "annotator:open_dashboard"
+              },
+              {
+                "label": "Remove Annoations from Text Editor",
+                "command": "annotator:remove_annotations"
               }
             ]
       }
