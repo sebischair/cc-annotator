@@ -3,6 +3,8 @@
 {ScrollView} = require 'atom-space-pen-views'
 
 Highcharts = require('highcharts')
+fs = require('fs')
+path = require('path')
 
 module.exports =
 class Dashboard extends ScrollView
@@ -12,8 +14,13 @@ class Dashboard extends ScrollView
        @div class:'container2', style: 'padding: 20px 20px 20px 20px;'
        @div class:'container3', style: 'padding: 20px 20px 20px 20px;'
 
-   initialize: ->
+   initialize: (state) ->
      super
+     console.log("State path: " + state.path)
+     files_ = @getFilesinDirectory(state.path)
+     for somefile in files_
+       console.log(somefile)
+     @getAnnotationCounts(files_ , state.path)
      @addGraph()
 
   addGraph: ->
@@ -25,34 +32,16 @@ class Dashboard extends ScrollView
         renderTo: newDiv
         type: 'column'
       title: text: 'Files by number of Annotations'
-      xAxis: categories: [
-        'File 1'
-        'File 2'
-        'File 3'
-        'File 4'
-        'File 5'
-      ]
+      xAxis: categories: @set1
       yAxis: title: text: 'Number of Annotations'
       series: [
         {
           name: 'User Generated Annotation'
-          data: [
-            1
-            4
-            4
-            2
-            8
-          ]
+          data: @set2
         }
         {
           name: 'Machine Generated Annotation'
-          data: [
-            5
-            7
-            3
-            3
-            5
-          ]
+          data: @set3
         }
       ])
 
@@ -187,3 +176,40 @@ class Dashboard extends ScrollView
 
   getTitle: () ->
     return 'Dashboard'
+
+  getFilesinDirectory: (dir) ->
+    onlyFiles = []
+    allFiles = fs.readdirSync(dir)
+    for elem in allFiles
+      fileobj = path.join(dir , elem)
+      if(!fs.statSync(fileobj).isDirectory())
+        onlyFiles.push(elem)
+      else
+        console.log(elem + " is a directory!!")
+    return onlyFiles
+
+  getAnnotationCounts: (files, dir) ->
+    customAnnots = {}
+    macgenAnnots = {}
+    @set1 = []
+    @set2 = []
+    @set3 = []
+    fileName = path.join(dir, '.annotator')
+    try
+      json = fs.readFileSync(fileName)
+      data = JSON.parse(json)
+      annotatedFiles = data.annotated_files
+      for annot in annotatedFiles
+        macgenAnnots[annot.meta.name] = annot.annotations.length
+      for file in files
+        @set1.push(file)
+        if(typeof macgenAnnots[file] == 'undefined')
+          @set2.push(0)
+        else
+          @set2.push(macgenAnnots[file] )
+      for elem in @set1
+        console.log('Element: ' + elem)
+      for elem in @set2
+        console.log('Value: ' + elem)
+    catch error
+      console.log('Error: ' + error)
