@@ -6,6 +6,7 @@ module.exports =
 class PaneView extends HTMLElement
   initialize: (@name, @line, @file, @vote, @line_content, @description, @current_row, @type) ->
     side_pane = this
+    side_pane.destroy()
     @closeElem = document.createElement('div')
     @closeElem.classList.add('close-container')
     @closeIcon = document.createElement('span')
@@ -66,7 +67,7 @@ class PaneView extends HTMLElement
       @nameBox.appendChild(@nameline)
       side_pane.appendChild(@nameBox)
 
-      @nameline.textContent = @line.start.row
+      @nameline.textContent = @current_row
       @nameline.title = @line
 
     # Description
@@ -186,6 +187,7 @@ class PaneView extends HTMLElement
       side_pane.removeChild(@buttonsBox)
       side_pane.removeChild(@votesBox)
       side_pane.removeChild(@closeElem)
+      side_pane.empty()
       side_pane.panel.destroy()
 
     catch
