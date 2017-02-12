@@ -9,7 +9,7 @@
                 "command": "annotator:annotate_code"
               },
               {
-                "label": "Submit New Annotation",
+                "label": "Create Custom Annotation",
                 "command": "annotator:submit_annotation"
               },
               {
@@ -21,12 +21,12 @@
                 "command": "annotator:open_dashboard"
               },
               {
-                "label": "Configuration",
-                "command": "annotator:open_configuration"
-              },
-              {
                 "label": "Open File Dashboard",
                 "command": "annotator:open_filedashboard"
+              },
+              {
+                "label": "Configuration",
+                "command": "annotator:open_configuration"
               },
               {
                 "label": "Remove Annoations from Text Editor",
@@ -48,7 +48,7 @@
               "command": "annotator:annotate_code"
             },
             {
-              "label": "Submit New Annotation",
+              "label": "Create Custom Annotation",
               "command": "annotator:submit_annotation"
             },
             {
