@@ -2,6 +2,7 @@
 {ScrollView} = require 'atom-space-pen-views'
 {$$, TextEditorView} = require 'atom-space-pen-views'
 query = require './query'
+project_lib = require './project'
 
 
 fs = require('fs')
@@ -12,17 +13,25 @@ self_config= {}
 projects_mapping = {}
 
 module.exports =
-class Dashboard extends ScrollView
+class ConfigView extends ScrollView
   @content: ->
      @div class: "configuration", overflow: "scroll", tabindex: -1, style: "overflow: scroll;", =>
-       @div class:'project-mapping', style: 'padding: 20px 20px 20px 20px;', =>
+       @div class:"general-information", style:"padding: 20px; padding-bottom: 10px;", =>
+         @h1 class:"configuration-title", style:'font-size: 2em; font-weight: bold;', 'cc-annotator configuration'
+       @div class:'project-mapping', style: 'padding: 20px; padding-top: 0px;', =>
          @h1 class:'section-title', "Projects"
          @table class: 'project_table', outlet:'projectTable',  =>
            @tr class: 'table-header-row', =>
              @th '', 'Opened Project'
              @th class: 'project-selection', 'Mapped Project'
-         @div class:'btn btn-primary', outlet:'save_button', 'Save'
-       @div class:'user-information', style: 'padding: 20px 20px 20px 20px;'
+         @div class:'btn btn-primary', outlet:'save_projects_button', 'Save'
+       @div class:'user-information', style: 'padding: 20px; padding-top: 0px;', =>
+         @h1 class:'section-title', "User Information"
+         @div class:'information-container-name', outlet:'nameContainer', =>
+           @div class:'information-title', 'Name:'
+         @div class:'information-container-mail', =>
+           @div class:'information-title', 'E-Mail:'
+         @div class:'btn btn-primary', outlet:'save_user_button', 'Save'
 
 
   initialize: (state) ->
@@ -33,11 +42,16 @@ class Dashboard extends ScrollView
      query.sebis_services_get(url, "")
           .then (response) ->
               self_config.handle_projects(response)
-          .catch (err) ->
-               atom.notifications.addError("Could not get projects from server")
+              self_config.add_user_information()
+          #.catch (err) ->
+          #     atom.notifications.addError("Could not get projects from server")
 
-     @save_button.on 'click', =>
+     @save_projects_button.on 'click', =>
        @save_project_mapping()
+
+     @save_user_button.on 'click', =>
+        @save_user_information()
+
 
   getTitle: () ->
     return 'Annotator Configuration'
@@ -119,3 +133,26 @@ class Dashboard extends ScrollView
       new_mappings.push(new_mapping)
 
     atom.workspace.config.set('cc-annotator.projects', new_mappings)
+
+  add_user_information: () ->
+
+    user = project_lib.get_cached_user_info();
+    @textEditorName = document.createElement 'atom-text-editor'
+    @textEditorName.classList.add('editor', 'mini', 'submit_name_information', 'text_editor');
+    @textEditorName.setAttribute("mini", "");
+    @textEditorName.getModel().setText(user.name)
+    container = document.getElementsByClassName('information-container-name')[0]
+    container.appendChild(@textEditorName)
+
+    @textEditorEMail = document.createElement 'atom-text-editor'
+    @textEditorEMail.classList.add('editor', 'mini', 'submit_mail_information', 'text_editor');
+    @textEditorEMail.setAttribute("mini", "");
+    @textEditorEMail.getModel().setText(user.mail)
+    container = document.getElementsByClassName('information-container-mail')[0]
+    container.appendChild(@textEditorEMail)
+
+  save_user_information: () ->
+    user = {}
+    user.name = @textEditorName.getModel().getText()
+    user.mail = @textEditorEMail.getModel().getText()
+    project_lib.update_cached_user(user)
