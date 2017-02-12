@@ -17,8 +17,12 @@
                 "command": "annotator:update_patterns"
               },
               {
-                "label": "Open Dashboard",
+                "label": "Open Directory Dashboard",
                 "command": "annotator:open_dashboard"
+              },
+              {
+                "label": "Open File Dashboard",
+                "command": "annotator:open_filedashboard"
               },
               {
                 "label": "Remove Annoations from Text Editor",
