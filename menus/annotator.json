@@ -21,6 +21,10 @@
                 "command": "annotator:open_dashboard"
               },
               {
+                "label": "Configuration",
+                "command": "annotator:open_configuration"
+              },
+              {
                 "label": "Open File Dashboard",
                 "command": "annotator:open_filedashboard"
               },
@@ -50,6 +54,10 @@
             {
               "label": "Update Reqular Expressions",
               "command": "annotator:update_patterns"
+            },
+            {
+              "label": "Configuration",
+              "command": "annotator:open_configuration"
             }
           ]
         }
