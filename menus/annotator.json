@@ -9,7 +9,7 @@
                 "command": "annotator:annotate_code"
               },
               {
-                "label": "Submit New Annotation",
+                "label": "Create Custom Annotation",
                 "command": "annotator:submit_annotation"
               },
               {
@@ -44,7 +44,7 @@
               "command": "annotator:annotate_code"
             },
             {
-              "label": "Submit New Annotation",
+              "label": "Create Custom Annotation",
               "command": "annotator:submit_annotation"
             },
             {
