@@ -6,6 +6,7 @@ module.exports =
 class PaneView extends HTMLElement
   initialize: (@name, @line, @file, @vote, @line_content, @description, @current_row, @type) ->
     side_pane = this
+
     side_pane.destroy()
     @closeElem = document.createElement('div')
     @closeElem.classList.add('close-container')
@@ -116,14 +117,14 @@ class PaneView extends HTMLElement
 
     @upVoteButton = document.createElement('button')
     @upVoteButton.classList.add('up-btn', 'btn', 'icon', 'icon-arrow-up')
-    @upVoteButton.addEventListener 'click', @voteClick
+    @upVoteButton.addEventListener 'click', @voteUpClick
     @buttonsBox.appendChild(@upVoteButton)
 
     #@upVoteButton.textContent = "Up"
 
     @upVoteButton = document.createElement('button')
     @upVoteButton.classList.add('up-btn', 'btn', 'icon', 'icon-arrow-down')
-    @upVoteButton.addEventListener 'click', @voteClick
+    @upVoteButton.addEventListener 'click', @voteDownClick
     @buttonsBox.appendChild(@upVoteButton)
 
     #@upVoteButton.textContent = "Down"
@@ -167,7 +168,14 @@ class PaneView extends HTMLElement
   getDescription: ->
     return @description
 
-  voteClick: ->
+  voteUpClick: ->
+    side_pane.vote = side_pane.vote + 1
+    side_pane.votesTitle.textContent = side_pane.vote
+    atom.notifications.addInfo("Thanks for your feedback!")
+
+  voteDownClick: ->
+    side_pane.vote = side_pane.vote - 1
+    side_pane.votesTitle.textContent = side_pane.vote
     atom.notifications.addInfo("Thanks for your feedback!")
 
   attach: ->
