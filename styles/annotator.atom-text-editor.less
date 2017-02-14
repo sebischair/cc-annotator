@@ -256,6 +256,25 @@ div.smell-detail-text {
   font-size: 1.1em;
 }
 
+// Adds an @octicon-icon with a certain @octicon-color after the @folderName in the Tree View.
+//.add-icon-to-folder('Test1');
+//.add-icon-to-folder;
+.icon-file-directory[isAnnotated='true']::after {
+  color: rgb(255, 114, 117);
+  font-family: 'Octicons Regular';
+  content: '\f091';
+  font-size: 16px;
+  margin-left: 20px;
+}
+
+.icon-file-text[isAnnotated='true']::after {
+  color: rgb(255, 114, 117);
+  font-family: 'Octicons Regular';
+  content: '\f091';
+  font-size: 16px;
+  margin-left: 20px;
+}
+
 /* Configuration View */
 .project-name {
   min-width: 200px;
