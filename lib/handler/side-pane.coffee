@@ -4,8 +4,10 @@ side_pane = {}
 
 module.exports =
 class PaneView extends HTMLElement
-  initialize: (@name, @line, @file, @vote, @line_content, @description, @current_row) ->
+  initialize: (@name, @line, @file, @vote, @line_content, @description, @current_row, @type) ->
     side_pane = this
+
+    side_pane.destroy()
     @closeElem = document.createElement('div')
     @closeElem.classList.add('close-container')
     @closeIcon = document.createElement('span')
@@ -42,18 +44,32 @@ class PaneView extends HTMLElement
     @nameBox = document.createElement('div')
     @nameBox.classList.add('smell-detail-box')
 
-    @nameTitle = document.createElement('span')
-    @nameTitle.classList.add('smell-detail-info', 'line')
-    @nameTitle.textContent = "Lines:"
-    @nameBox.appendChild(@nameTitle)
+    if(@type.startsWith("Machine"))
+      @nameTitle = document.createElement('span')
+      @nameTitle.classList.add('smell-detail-info', 'line')
+      @nameTitle.textContent = "Lines:"
+      @nameBox.appendChild(@nameTitle)
 
-    @nameline = document.createElement('span')
-    @nameline.classList.add('smell-detail-text', 'line')
-    @nameBox.appendChild(@nameline)
-    side_pane.appendChild(@nameBox)
+      @nameline = document.createElement('span')
+      @nameline.classList.add('smell-detail-text', 'line')
+      @nameBox.appendChild(@nameline)
+      side_pane.appendChild(@nameBox)
 
-    @nameline.textContent = (" "+(item + 1) for item in @line )
-    @nameline.title = @line
+      @nameline.textContent = (" "+(item + 1) for item in @line )
+      @nameline.title = @line
+    else
+      @nameTitle = document.createElement('span')
+      @nameTitle.classList.add('smell-detail-info', 'line')
+      @nameTitle.textContent = "Line:"
+      @nameBox.appendChild(@nameTitle)
+
+      @nameline = document.createElement('span')
+      @nameline.classList.add('smell-detail-text', 'line')
+      @nameBox.appendChild(@nameline)
+      side_pane.appendChild(@nameBox)
+
+      @nameline.textContent = @current_row
+      @nameline.title = @line
 
     # Description
     @descrBox = document.createElement('div')
@@ -101,14 +117,14 @@ class PaneView extends HTMLElement
 
     @upVoteButton = document.createElement('button')
     @upVoteButton.classList.add('up-btn', 'btn', 'icon', 'icon-arrow-up')
-    @upVoteButton.addEventListener 'click', @voteClick
+    @upVoteButton.addEventListener 'click', @voteUpClick
     @buttonsBox.appendChild(@upVoteButton)
 
     #@upVoteButton.textContent = "Up"
 
     @upVoteButton = document.createElement('button')
     @upVoteButton.classList.add('up-btn', 'btn', 'icon', 'icon-arrow-down')
-    @upVoteButton.addEventListener 'click', @voteClick
+    @upVoteButton.addEventListener 'click', @voteDownClick
     @buttonsBox.appendChild(@upVoteButton)
 
     #@upVoteButton.textContent = "Down"
@@ -152,7 +168,14 @@ class PaneView extends HTMLElement
   getDescription: ->
     return @description
 
-  voteClick: ->
+  voteUpClick: ->
+    side_pane.vote = side_pane.vote + 1
+    side_pane.votesTitle.textContent = side_pane.vote
+    atom.notifications.addInfo("Thanks for your feedback!")
+
+  voteDownClick: ->
+    side_pane.vote = side_pane.vote - 1
+    side_pane.votesTitle.textContent = side_pane.vote
     atom.notifications.addInfo("Thanks for your feedback!")
 
   attach: ->
@@ -172,6 +195,7 @@ class PaneView extends HTMLElement
       side_pane.removeChild(@buttonsBox)
       side_pane.removeChild(@votesBox)
       side_pane.removeChild(@closeElem)
+      side_pane.empty()
       side_pane.panel.destroy()
 
     catch
