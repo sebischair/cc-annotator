@@ -1,4 +1,4 @@
-{CompositeDisposable} = require 'event-kit'
+Do{CompositeDisposable} = require 'event-kit'
 {ScrollView} = require 'atom-space-pen-views'
 {$$, TextEditorView} = require 'atom-space-pen-views'
 query = require './query'
