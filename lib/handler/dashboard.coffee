@@ -180,16 +180,21 @@ class Dashboard extends ScrollView
           for cust in annot.custom_annotations
             if(cust.user.name == @user)
               if(typeof(customAnnots[annot.meta.name]) == 'undefined' )
-                customAnnots[annot.meta.name] = 0
+                customAnnots[annot.meta.name] = 1
               else
                 customAnnots[annot.meta.name] += 1
       else if(typeof(@tag) != 'undefined')
         for annot in annotatedFiles
-          macgenAnnots[annot.meta.name] = annot.annotations.length
+          for mach in annot.annotations
+            if(mach.tags.indexOf(@tag) != -1)
+              if(typeof(macgenAnnots[annot.meta.name]) == 'undefined' )
+                macgenAnnots[annot.meta.name] = 1
+              else
+                macgenAnnots[annot.meta.name] += 1
           for cust in annot.custom_annotations
             if(cust.tags.indexOf(@tag) != -1)
               if(typeof(customAnnots[annot.meta.name]) == 'undefined' )
-                customAnnots[annot.meta.name] = 0
+                customAnnots[annot.meta.name] = 1
               else
                 customAnnots[annot.meta.name] += 1
       else
@@ -346,6 +351,16 @@ class Dashboard extends ScrollView
                   userCntMap[tag] += 1
       else if(typeof(@tag) != 'undefined')
         for annot in annotatedFiles
+          for mach in annot.custom_annotations
+            for tag in mach.tags
+              if(tag == @tag)
+                if(list1.indexOf(tag) == -1)
+                  list1.push(tag)
+                if(typeof userCntMap[tag] == 'undefined')
+                  userCntMap[tag] = 1
+                else
+                  console.log('In else...')
+                  userCntMap[tag] += 1
           for cust in annot.custom_annotations
             for tag in cust.tags
               if(tag == @tag)
@@ -358,6 +373,15 @@ class Dashboard extends ScrollView
                   userCntMap[tag] += 1
       else
         for annot in annotatedFiles
+          for mach in annot.custom_annotations
+            for tag in mach.tags
+              if(list1.indexOf(tag) == -1)
+                list1.push(tag)
+              if(typeof userCntMap[tag] == 'undefined')
+                userCntMap[tag] = 1
+              else
+                console.log('In else...')
+                userCntMap[tag] += 1
           for cust in annot.custom_annotations
             for tag in cust.tags
               if(list1.indexOf(tag) == -1)

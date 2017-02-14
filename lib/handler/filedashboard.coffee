@@ -13,6 +13,7 @@ class FileDashboard extends ScrollView
      @div class: "test", overflow: "scroll", tabindex: -1, style: "overflow: scroll;", =>
        @div class:'container1', style: 'padding: 20px 20px 20px 20px;'
        @div class:'container2', style: 'padding: 20px 20px 20px 20px;'
+       @div class:'container3', style: 'padding: 20px 20px 20px 20px;'
 
    initialize: (state) ->
      super
@@ -20,15 +21,55 @@ class FileDashboard extends ScrollView
      dir = @getParentDirectory(state.path)
      file= state.path.substring(state.path.lastIndexOf(path.sep) + 1)
      console.log("Directory Path: " + dir)
+     @getAnnotationandFileSize(dir, file)
      @getUserContributions(dir, file)
      @getTagDistributions(dir, file)
      @getAnnotationsCountbyTime(dir, file)
      @addGraph()
 
   addGraph: ->
+    newDiv1 = document.createElement('div')
+    newDiv1.style = "width: 80%; height: 40%;"
+    @find('div.container1').append(newDiv1)
+    myChart1 = new (Highcharts.Chart)(
+      chart:
+        renderTo: newDiv1
+        type: 'areaspline'
+      title: text: 'Annoated lines vs File size comparion over time'
+      xAxis: categories: [
+        'Week 1'
+        'Week 2'
+        'Week 3'
+        'Week 4'
+        'Week 5'
+      ]
+      yAxis: title: text: 'Number of Lines'
+      series:[
+        {
+          name: 'Total Number of lines in file'
+          data: [
+            12
+            17
+            26
+            37
+            67
+          ]
+        }
+        {
+          name: 'Number of Annotated lines in the file'
+          data: [
+            6
+            3
+            15
+            0
+            3
+          ]
+        }
+      ])
+
     newSpan1 = document.createElement('div')
-    newSpan1.style = "width: 45%; height: 45%; display: inline-block;"
-    @find('div.container1').append(newSpan1)
+    newSpan1.style = "width: 30%; height: 45%; display: inline-block;"
+    @find('div.container2').append(newSpan1)
     piechart1 = new (Highcharts.Chart)(
       chart:
         renderTo: newSpan1
@@ -45,9 +86,29 @@ class FileDashboard extends ScrollView
         data: @set4
       } ])
 
+    newSpan3 = document.createElement('div')
+    newSpan3.style = "width: 30%; height: 45%; display: inline-block;"
+    @find('div.container2').append(newSpan3)
+    piechart1 = new (Highcharts.Chart)(
+      chart:
+        renderTo: newSpan3
+        type: 'pie'
+      title: text: 'Machine Generated Annotations by Tags'
+      plotOptions: pie:
+        allowPointSelect: true
+        cursor: 'pointer'
+        dataLabels: enabled: false
+        showInLegend: true
+      series: [ {
+        name: 'Annotations tagged'
+        innerSize: '50%'
+        colorByPoint: true
+        data: @set5
+      } ])
+
     newSpan2 = document.createElement('div')
-    newSpan2.style = "width: 45%; height: 45%; display: inline-block;"
-    @find('div.container1').append(newSpan2)
+    newSpan2.style = "width: 30%; height: 45%; display: inline-block;"
+    @find('div.container2').append(newSpan2)
     piechart1 = new (Highcharts.Chart)(
       chart:
         renderTo: newSpan2
@@ -66,7 +127,7 @@ class FileDashboard extends ScrollView
 
     newDiv2 = document.createElement('div')
     newDiv2.style = "width: 80%; height: 40%;"
-    @find('div.container2').append(newDiv2)
+    @find('div.container3').append(newDiv2)
     myChart2 = new (Highcharts.Chart)(
       chart:
         renderTo: newDiv2
@@ -90,6 +151,29 @@ class FileDashboard extends ScrollView
 
   getParentDirectory: (somepath) ->
     return somepath.substring(0, somepath.lastIndexOf(path.sep))
+
+  getAnnotationandFileSize: (dir, file) ->
+    count = 0
+    fileName = path.join(dir, '.annotator')
+    try
+      json = fs.readFileSync(fileName)
+      data = JSON.parse(json)
+      annotatedFiles = data.annotated_files
+      for annot in annotatedFiles
+        if(annot.meta.name == file)
+          for mach in annot.annotations
+            if(typeof(mach.rows[1]) != 'undefined')
+              alength = (mach.rows[1]) - (mach.rows[0]) + 1
+            else alength = 1
+            console.log("Alength " + alength)
+            count += alength
+          for cust in annot.custom_annotations
+            clength = (cust.range.end.row) - (cust.range.start.row) + 1
+            console.log("Clength " + clength)
+            count += clength
+      console.log("Total length ------------->" + count)
+    catch error
+      console.log('Error: ' + error)
 
   getUserContributions: (dir, file) ->
     list1 = []
