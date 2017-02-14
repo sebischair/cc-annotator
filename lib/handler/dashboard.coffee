@@ -153,6 +153,7 @@ class Dashboard extends ScrollView
 
   getFilesinDirectory: (dir) ->
     onlyFiles = []
+    console.log("Getting files in directory")
     allFiles = fs.readdirSync(dir)
     for elem in allFiles
       fileobj = path.join(dir , elem)
