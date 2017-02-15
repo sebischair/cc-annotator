@@ -200,17 +200,18 @@ class FileDashboard extends ScrollView
       data = JSON.parse(json)
       annotatedFiles = data.annotated_files
       for annot in annotatedFiles
-        for cust in annot.custom_annotations
-          console.log("File in .annotator " + annot.meta.name )
-          console.log("Actual file .annotator " + file )
-          if(annot.meta.name == file)
-            if(list1.indexOf(cust.user.name) == -1)
-              list1.push(cust.user.name)
-            if(typeof userCntMap[cust.user.name] == 'undefined')
-              userCntMap[cust.user.name] = 1
-            else
-              console.log('In else...')
-              userCntMap[cust.user.name] += 1
+        if(annot.meta.name == file)
+          for cust in annot.custom_annotations
+            console.log("File in .annotator " + annot.meta.name )
+            console.log("Actual file .annotator " + file )
+            if(annot.meta.name == file)
+              if(list1.indexOf(cust.user.name) == -1)
+                list1.push(cust.user.name)
+              if(typeof userCntMap[cust.user.name] == 'undefined')
+                userCntMap[cust.user.name] = 1
+              else
+                console.log('In else...')
+                userCntMap[cust.user.name] += 1
       for usr in list1
         @set4.push({
             name: usr
@@ -231,24 +232,25 @@ class FileDashboard extends ScrollView
       data = JSON.parse(json)
       annotatedFiles = data.annotated_files
       for annot in annotatedFiles
-        for mach in annot.annotations
-          for tag in mach.tags
-            if(list1.indexOf(tag) == -1)
-              list1.push(tag)
-            if(typeof userCntMap[tag] == 'undefined')
-              userCntMap[tag] = 1
-            else
-              console.log('In else...')
-              userCntMap[tag] += 1
-        for cust in annot.custom_annotations
-          for tag in cust.tags
-            if(list1.indexOf(tag) == -1)
-              list1.push(tag)
-            if(typeof userCntMap[tag] == 'undefined')
-              userCntMap[tag] = 1
-            else
-              console.log('In else...')
-              userCntMap[tag] += 1
+        if(annot.meta.name == file)
+          for mach in annot.annotations
+            for tag in mach.tags
+              if(list1.indexOf(tag) == -1)
+                list1.push(tag)
+              if(typeof userCntMap[tag] == 'undefined')
+                userCntMap[tag] = 1
+              else
+                console.log('In else...')
+                userCntMap[tag] += 1
+          for cust in annot.custom_annotations
+            for tag in cust.tags
+              if(list1.indexOf(tag) == -1)
+                list1.push(tag)
+              if(typeof userCntMap[tag] == 'undefined')
+                userCntMap[tag] = 1
+              else
+                console.log('In else...')
+                userCntMap[tag] += 1
       for tag in list1
         @set5.push({
             name: tag
@@ -287,10 +289,10 @@ class FileDashboard extends ScrollView
       subcon1.classList.add('code-style')
       subcon1.innerHTML = @annoFile[element].line
       subcon2 = document.createElement('div')
-      subcon2.style= "width: 80%;display: inline-block;padding: 15px 5px 15px 5px"
+      subcon2.style= "width: 80%; overflow:hidden; word-wrap: break-word; display: inline-block;padding: 15px 5px 15px 5px;"
       subcon2.innerHTML = "Description: " + @annoFile[element].desc
       subcon3 = document.createElement('div')
-      subcon3.style = "width: 20%;display: inline-block;padding: 15px 5px 15px 5px"
+      subcon3.style = "width: 20%;display: inline-block;padding: 15px 25px 15px 5px"
       subbut = document.createElement('button')
       subbut.classList.add('btn')
       subbut.classList.add('btn-primary')
