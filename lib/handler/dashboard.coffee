@@ -176,7 +176,7 @@ class Dashboard extends ScrollView
       annotatedFiles = data.annotated_files
       if(typeof(@user) != 'undefined')
         for annot in annotatedFiles
-          macgenAnnots[annot.meta.name] = annot.annotations.length
+          macgenAnnots[annot.meta.name] = 0
           for cust in annot.custom_annotations
             if(cust.user.name == @user)
               if(typeof(customAnnots[annot.meta.name]) == 'undefined' )
@@ -373,7 +373,7 @@ class Dashboard extends ScrollView
                   userCntMap[tag] += 1
       else
         for annot in annotatedFiles
-          for mach in annot.custom_annotations
+          for mach in annot.annotations
             for tag in mach.tags
               if(list1.indexOf(tag) == -1)
                 list1.push(tag)
